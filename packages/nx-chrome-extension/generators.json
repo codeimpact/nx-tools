@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-chrome-extension",
+  "version": "0.0.1",
+  "generators": {
+    "nx-chrome-extension": {
+      "factory": "./src/generators/nx-chrome-extension/generator",
+      "schema": "./src/generators/nx-chrome-extension/schema.json",
+      "description": "nx-chrome-extension generator"
+    }
+  }
+}
