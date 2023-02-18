@@ -7,6 +7,11 @@
       "factory": "./src/generators/nx-chrome-extension-react/generator",
       "schema": "./src/generators/nx-chrome-extension-react/schema.json",
       "description": "nx-chrome-extension-react generator"
+    },
+    "application": {
+      "factory": "./src/generators/application/generator",
+      "schema": "./src/generators/application/schema.json",
+      "description": "application generator"
     }
   }
 }
