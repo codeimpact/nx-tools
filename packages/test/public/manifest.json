@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "test",
+  "version": "0.0.1",
+  "description": "",
+  "options_page": "src/pages/options/index.html",
+  "background": { "service_worker": "src/pages/background/index.js" },
+  "homepage_url": "https://codeimpact.nl",
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-34.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "js": ["src/pages/content/index.js"]
+    }
+  ],
+  "devtools_page": "src/pages/devtools/index.html",
+  "icons": {
+    "128": "icon-128.png"
+  }
+}
