@@ -21,18 +21,23 @@
       "type": "string",
       "description": "A directory where the project is placed"
     },
+    "description": {
+      "type": "string",
+      "description": "The description of the extension",
+      "default": ""
+    },
     "manifestVersion": {
       "type": "string",
       "description": "The manifest version to use (v2 is not supported anymore in the chrome web store)",
-      "enum": ["v3", "v2"],
-      "default": "v3"
+      "enum": ["3", "2"],
+      "default": "3"
     },
     "popup": {
       "type": "boolean",
       "description": "Generate a chrome extension popup",
       "default": true
     },
-    "background": {
+    "backgroundScript": {
       "type": "boolean",
       "description": "Generate a background script / service worker",
       "default": true
@@ -41,6 +46,11 @@
       "type": "boolean",
       "description": "Generate a chrome extension options page",
       "default": true
+    },
+    "newTabPage": {
+      "type": "boolean",
+      "description": "Generate a page for a new chrome tab",
+      "default": false
     },
     "contentScript": {
       "type": "boolean",

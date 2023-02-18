@@ -14,9 +14,11 @@ export interface Schema {
   name: string;
   tags?: string;
   directory?: string;
+  description?: string;
   manifestVersion?: string;
   popup?: boolean;
-  background?: boolean;
+  backgroundScript?: boolean;
+  newTabPage?: boolean;
   optionsPage?: boolean;
   contentScript?: boolean;
   devtoolsPage?: boolean;
