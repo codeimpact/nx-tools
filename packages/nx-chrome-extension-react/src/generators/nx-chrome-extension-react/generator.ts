@@ -8,9 +8,9 @@ import {
   Tree,
 } from '@nrwl/devkit';
 import * as path from 'path';
-import { NxChromeExtensionGeneratorSchema } from './schema';
+import { NxChromeExtensionReactGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends NxChromeExtensionGeneratorSchema {
+interface NormalizedSchema extends NxChromeExtensionReactGeneratorSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -19,7 +19,7 @@ interface NormalizedSchema extends NxChromeExtensionGeneratorSchema {
 
 function normalizeOptions(
   tree: Tree,
-  options: NxChromeExtensionGeneratorSchema
+  options: NxChromeExtensionReactGeneratorSchema
 ): NormalizedSchema {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
@@ -57,7 +57,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 
 export default async function (
   tree: Tree,
-  options: NxChromeExtensionGeneratorSchema
+  options: NxChromeExtensionReactGeneratorSchema
 ) {
   const normalizedOptions = normalizeOptions(tree, options);
   addProjectConfiguration(tree, normalizedOptions.projectName, {
@@ -66,7 +66,7 @@ export default async function (
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@codeimpact/nx-chrome-extension:build',
+        executor: '@codeimpact/nx-chrome-extension-react:build',
       },
     },
     tags: normalizedOptions.parsedTags,

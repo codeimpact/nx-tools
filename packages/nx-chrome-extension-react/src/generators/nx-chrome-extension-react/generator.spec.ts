@@ -2,11 +2,11 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
-import { NxChromeExtensionGeneratorSchema } from './schema';
+import { NxChromeExtensionReactGeneratorSchema } from './schema';
 
-describe('nx-chrome-extension generator', () => {
+describe('nx-chrome-extension-react generator', () => {
   let appTree: Tree;
-  const options: NxChromeExtensionGeneratorSchema = { name: 'test' };
+  const options: NxChromeExtensionReactGeneratorSchema = { name: 'test' };
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });

@@ -1,5 +1,5 @@
 {
-  "name": "@codeimpact/nx-chrome-extension",
+  "name": "@codeimpact/nx-chrome-extension-react",
   "version": "0.0.1",
   "main": "src/index.js",
   "generators": "./generators.json",

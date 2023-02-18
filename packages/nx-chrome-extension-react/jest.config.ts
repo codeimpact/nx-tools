@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'nx-chrome-extension',
+  displayName: 'nx-chrome-extension-react',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/packages/nx-chrome-extension',
+  coverageDirectory: '../../coverage/packages/nx-chrome-extension-react',
 };

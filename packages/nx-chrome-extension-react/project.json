@@ -1,35 +1,35 @@
 {
-  "name": "nx-chrome-extension",
+  "name": "nx-chrome-extension-react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/nx-chrome-extension/src",
+  "sourceRoot": "packages/nx-chrome-extension-react/src",
   "projectType": "library",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/nx-chrome-extension",
-        "main": "packages/nx-chrome-extension/src/index.ts",
-        "tsConfig": "packages/nx-chrome-extension/tsconfig.lib.json",
+        "outputPath": "dist/packages/nx-chrome-extension-react",
+        "main": "packages/nx-chrome-extension-react/src/index.ts",
+        "tsConfig": "packages/nx-chrome-extension-react/tsconfig.lib.json",
         "assets": [
-          "packages/nx-chrome-extension/*.md",
+          "packages/nx-chrome-extension-react/*.md",
           {
-            "input": "./packages/nx-chrome-extension/src",
+            "input": "./packages/nx-chrome-extension-react/src",
             "glob": "**/!(*.ts)",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-chrome-extension/src",
+            "input": "./packages/nx-chrome-extension-react/src",
             "glob": "**/*.d.ts",
             "output": "./src"
           },
           {
-            "input": "./packages/nx-chrome-extension",
+            "input": "./packages/nx-chrome-extension-react",
             "glob": "generators.json",
             "output": "."
           },
           {
-            "input": "./packages/nx-chrome-extension",
+            "input": "./packages/nx-chrome-extension-react",
             "glob": "executors.json",
             "output": "."
           }
@@ -41,10 +41,10 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "packages/nx-chrome-extension/**/*.ts",
-          "packages/nx-chrome-extension/generators.json",
-          "packages/nx-chrome-extension/executors.json",
-          "packages/nx-chrome-extension/package.json"
+          "packages/nx-chrome-extension-react/**/*.ts",
+          "packages/nx-chrome-extension-react/generators.json",
+          "packages/nx-chrome-extension-react/executors.json",
+          "packages/nx-chrome-extension-react/package.json"
         ]
       }
     },
@@ -52,7 +52,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/nx-chrome-extension/jest.config.ts",
+        "jestConfig": "packages/nx-chrome-extension-react/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

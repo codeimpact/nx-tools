@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-chrome-extension-react",
+  "version": "0.0.1",
+  "generators": {
+    "nx-chrome-extension-react": {
+      "factory": "./src/generators/nx-chrome-extension-react/generator",
+      "schema": "./src/generators/nx-chrome-extension-react/schema.json",
+      "description": "nx-chrome-extension-react generator"
+    }
+  }
+}
