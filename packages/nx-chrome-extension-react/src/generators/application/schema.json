@@ -65,7 +65,7 @@
     "style": {
       "description": "The file extension to be used for style files.",
       "type": "string",
-      "default": "css",
+      "default": "scss",
       "alias": "s",
       "x-prompt": {
         "message": "Which stylesheet format would you like to use?",
