@@ -34,13 +34,10 @@ export default async function (
   createApplicationFiles(host, options);
   addProject(host, options);
   ensurePackage(host, '@nrwl/vite', nxVersion);
-  const { viteConfigurationGenerator } = await import('@nrwl/vite');
-  const viteTask = await viteConfigurationGenerator(host, {
+
+  const { initGenerator } = await import('@nrwl/vite');
+  const viteTask = await initGenerator(host, {
     uiFramework: 'react',
-    project: options.projectName,
-    newProject: true,
-    includeVitest: options.unitTestRunner === 'vitest',
-    inSourceTests: false
   });
   tasks.push(viteTask);
 
