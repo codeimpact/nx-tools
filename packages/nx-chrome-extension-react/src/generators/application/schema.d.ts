@@ -10,12 +10,11 @@ export type SupportedStyles =
   | 'styled-jsx'
   | 'none';
 
-
-export interface ApplicationGeneratorSchema {
+export interface Schema {
   name: string;
   tags?: string;
   directory?: string;
-  manifestVersion?: number;
+  manifestVersion?: string;
   popup?: boolean;
   background?: boolean;
   optionsPage?: boolean;
@@ -24,11 +23,19 @@ export interface ApplicationGeneratorSchema {
   style: SupportedStyles;
   linter: Linter;
   skipFormat?: boolean;
-  unitTestRunner?: 'jest' | 'vitest' | 'none';
+  unitTestRunner?: 'vitest' | 'none';
+  skipWorkspaceJson?: boolean;
   js?: boolean;
   strict?: boolean;
   standaloneConfig?: boolean;
   compiler?: 'babel' | 'swc';
   skipPackageJson?: boolean;
   rootProject?: boolean;
+}
+
+export interface NormalizedSchema<T extends Schema = Schema> extends T {
+  projectName: string;
+  projectRoot: string;
+  projectDirectory: string;
+  parsedTags: string[];
 }

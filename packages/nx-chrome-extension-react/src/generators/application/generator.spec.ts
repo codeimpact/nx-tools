@@ -2,14 +2,15 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 
 import generator from './generator';
-import { ApplicationGeneratorSchema } from './schema';
+import { Schema } from './schema';
+import { Linter } from '@nrwl/linter/src/generators/utils/linter';
 
-describe('application generator', () => {
+describe('nx-chrome-extension generator', () => {
   let appTree: Tree;
-  const options: ApplicationGeneratorSchema = { name: 'test' };
+  const options: Schema = {linter: Linter.None, style: "none", name: 'test' };
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace({layout: 'apps-libs'});
+    appTree = createTreeWithEmptyWorkspace({ layout: 'apps-libs' });
   });
 
   it('should run successfully', async () => {

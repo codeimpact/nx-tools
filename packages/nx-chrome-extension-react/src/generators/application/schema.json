@@ -22,10 +22,10 @@
       "description": "A directory where the project is placed"
     },
     "manifestVersion": {
-      "type": "number",
+      "type": "string",
       "description": "The manifest version to use (v2 is not supported anymore in the chrome web store)",
-      "enum": [2, 3],
-      "default": 3
+      "enum": ["v3", "v2"],
+      "default": "v3"
     },
     "popup": {
       "type": "boolean",
@@ -34,7 +34,7 @@
     },
     "background": {
       "type": "boolean",
-      "description": "Generate a chrome extension background/service worker",
+      "description": "Generate a background script / service worker",
       "default": true
     },
     "optionsPage": {
@@ -108,9 +108,15 @@
       "default": false,
       "x-priority": "internal"
     },
+    "skipWorkspaceJson": {
+      "description": "Skip updating `workspace.json` with default options based on values provided to this app (e.g. babel, style).",
+      "type": "boolean",
+      "default": false,
+      "x-priority": "internal"
+    },
     "unitTestRunner": {
       "type": "string",
-      "enum": ["jest", "vitest", "none"],
+      "enum": ["vitest", "none"],
       "description": "Test runner to use for unit tests.",
       "default": "vitest"
     },
