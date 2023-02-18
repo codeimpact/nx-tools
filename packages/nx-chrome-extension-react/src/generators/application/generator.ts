@@ -1,10 +1,12 @@
-import { addDependenciesToPackageJson, formatFiles, Tree } from '@nrwl/devkit';
-import { addReact } from './lib/add-react';
+import { addDependenciesToPackageJson, ensurePackage, formatFiles, Tree } from '@nrwl/devkit';
 import { Schema } from './schema';
 import { normalizeOptions } from './lib/normalize-options';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
 import { createApplicationFiles } from './lib/create-application-files';
 import { reactInitGenerator } from '@nrwl/react';
+import { extractTsConfigBase } from './lib/create-ts-config';
+import { addProject } from './lib/add-project';
+export const nxVersion = require('../../../package.json').version;
 
 export default async function (
   host: Tree,
@@ -23,8 +25,23 @@ export default async function (
 
   tasks.push(initTask);
 
+  if (!options.rootProject) {
+    extractTsConfigBase(host);
+  }
+
 
   createApplicationFiles(host, options);
+  addProject(host, options);
+  ensurePackage(host, '@nrwl/vite', nxVersion);
+  const { viteConfigurationGenerator } = await import('@nrwl/vite');
+  const viteTask = await viteConfigurationGenerator(host, {
+    uiFramework: 'react',
+    project: options.projectName,
+    newProject: true,
+    includeVitest: options.unitTestRunner === 'vitest',
+    inSourceTests: false
+  });
+  tasks.push(viteTask);
 
   // Add @types/chrome if typescript is used.
   if (options.js !== true) {
