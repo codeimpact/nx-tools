@@ -1,4 +1,5 @@
 import {
+  addDependenciesToPackageJson,
   addProjectConfiguration,
   formatFiles,
   generateFiles,
@@ -34,15 +35,20 @@ export default async function (
   const normalizedOptions = normalizeOptions(host, options);
 
   const tasks = [];
+
+  // Add @types/chrome if typescript is used.
+  if (normalizedOptions.js !== true) {
+    const devDependencies = {
+      '@types/chrome': '0.0.216',
+    }
+    const addNpmPackagesTask = addDependenciesToPackageJson(host, {}, devDependencies);
+    tasks.push(addNpmPackagesTask);
+  }
+
+  // Add react
   const addReactTask = await addReact(host, options);
   tasks.push(addReactTask);
 
-  //
-  //
-  //
-  //
-  //
-  //
   // addProjectConfiguration(host, normalizedOptions.projectName, {
   //   root: normalizedOptions.projectRoot,
   //   projectType: 'library',
