@@ -7,6 +7,7 @@ import { reactInitGenerator } from '@nrwl/react';
 import { extractTsConfigBase } from './lib/create-ts-config';
 import { addProject } from './lib/add-project';
 import { addLinting } from '@nrwl/react/src/generators/library/lib/add-linting';
+import { installCommonDependencies } from './lib/install-common-dependencies';
 export const nxVersion = require('../../../package.json').version;
 
 export default async function (
@@ -52,6 +53,9 @@ export default async function (
 
   const lintTask = await addLinting(host, options);
   tasks.push(lintTask);
+
+  const stylePreprocessorTask = installCommonDependencies(host, options);
+  tasks.push(stylePreprocessorTask);
 
   await formatFiles(host);
   return runTasksInSerial(...tasks);
