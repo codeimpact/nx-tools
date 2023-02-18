@@ -6,6 +6,7 @@ import { createApplicationFiles } from './lib/create-application-files';
 import { reactInitGenerator } from '@nrwl/react';
 import { extractTsConfigBase } from './lib/create-ts-config';
 import { addProject } from './lib/add-project';
+import { addLinting } from '@nrwl/react/src/generators/library/lib/add-linting';
 export const nxVersion = require('../../../package.json').version;
 
 export default async function (
@@ -52,21 +53,9 @@ export default async function (
     tasks.push(addNpmPackagesTask);
   }
 
-  // Add react
-  // const addReactTask = await addReact(host, options);
-  // tasks.push(addReactTask);
+  const lintTask = await addLinting(host, options);
+  tasks.push(lintTask);
 
-  // addProjectConfiguration(host, normalizedOptions.projectName, {
-  //   root: normalizedOptions.projectRoot,
-  //   projectType: 'library',
-  //   sourceRoot: `${normalizedOptions.projectRoot}/src`,
-  //   targets: {
-  //     build: {
-  //       executor: '@codeimpact/nx-chrome-extension:build',
-  //     },
-  //   },
-  //   tags: normalizedOptions.parsedTags,
-  // });
   await formatFiles(host);
   return runTasksInSerial(...tasks);
 }
