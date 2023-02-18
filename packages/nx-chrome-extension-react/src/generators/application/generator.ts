@@ -4,6 +4,7 @@ import { Schema } from './schema';
 import { normalizeOptions } from './lib/normalize-options';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
 import { createApplicationFiles } from './lib/create-application-files';
+import { reactInitGenerator } from '@nrwl/react';
 
 export default async function (
   host: Tree,
@@ -12,6 +13,16 @@ export default async function (
   const options = normalizeOptions(host, schema);
 
   const tasks = [];
+
+  const initTask = await reactInitGenerator(host, {
+    ...options,
+    skipBabelConfig: true,
+    skipHelperLibs: true,
+    e2eTestRunner: 'none'
+  });
+
+  tasks.push(initTask);
+
 
   createApplicationFiles(host, options);
 
