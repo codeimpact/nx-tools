@@ -1,7 +1,7 @@
-import { ServeExecutorSchema } from './schema';
+import { Schema } from './schema';
 
 export default async function runExecutor(
-  options: ServeExecutorSchema,
+  options: Schema,
 ) {
   console.log('Executor ran for Serve', options);
   return {
