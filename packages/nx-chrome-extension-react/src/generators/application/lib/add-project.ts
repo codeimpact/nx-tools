@@ -15,13 +15,60 @@ export function addProject(host, options: NormalizedSchema) {
     tags: options.parsedTags,
   };
 
+  project.targets = {
+    build: createBuildTarget(options),
+    serve: createServeTarget(options),
+  };
+
   addProjectConfiguration(host, options.projectName, {
     ...project,
   });
 }
+function createBuildTarget(options: NormalizedSchema): TargetConfiguration {
+  return {
+    executor: '@nrwl/vite:build',
+    outputs: ['{options.outputPath}'],
+    defaultConfiguration: 'production',
+    options: {
+      outputPath: joinPathFragments(
+        'dist',
+        options.projectRoot != '.'
+          ? options.projectRoot
+          : options.projectName
+      ),
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+  };
+}
 
-function maybeJs(options: NormalizedSchema, path: string): string {
-  return options.js && (path.endsWith('.ts') || path.endsWith('.tsx'))
-    ? path.replace(/\.tsx?$/, '.js')
-    : path;
+function createServeTarget(options: NormalizedSchema): TargetConfiguration {
+  return {
+    executor: '@nrwl/vite:build',
+    outputs: ['{options.outputPath}'],
+    defaultConfiguration: 'production',
+    options: {
+      outputPath: joinPathFragments(
+        'dist',
+        options.projectRoot != '.'
+          ? options.projectRoot
+          : options.projectName
+      ),
+      "watch": true,
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+  };
 }
