@@ -1,76 +1,60 @@
-import {
-  addProjectConfiguration,
-  formatFiles,
-  generateFiles,
-  getWorkspaceLayout,
-  names,
-  offsetFromRoot,
-  Tree,
-} from '@nrwl/devkit';
-import * as path from 'path';
-import { NxBrowserExtensionGeneratorSchema } from './schema';
-
-interface NormalizedSchema extends NxBrowserExtensionGeneratorSchema {
-  projectName: string;
-  projectRoot: string;
-  projectDirectory: string;
-  parsedTags: string[];
-}
-
-function normalizeOptions(
-  tree: Tree,
-  options: NxBrowserExtensionGeneratorSchema
-): NormalizedSchema {
-  const name = names(options.name).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
-    : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
-  const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
-  const parsedTags = options.tags
-    ? options.tags.split(',').map((s) => s.trim())
-    : [];
-
-  return {
-    ...options,
-    projectName,
-    projectRoot,
-    projectDirectory,
-    parsedTags,
-  };
-}
-
-function addFiles(tree: Tree, options: NormalizedSchema) {
-  const templateOptions = {
-    ...options,
-    ...names(options.name),
-    offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: '',
-  };
-  generateFiles(
-    tree,
-    path.join(__dirname, 'files'),
-    options.projectRoot,
-    templateOptions
-  );
-}
+import { ensurePackage, formatFiles, Tree } from '@nrwl/devkit';
+import { Schema } from './schema';
+import { normalizeOptions } from './lib/normalize-options';
+import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
+import { createApplicationFiles } from './lib/create-application-files';
+import { reactInitGenerator } from '@nrwl/react';
+import { extractTsConfigBase } from './lib/create-ts-config';
+import { addProject } from './lib/add-project';
+import { addLinting } from '@nrwl/react/src/generators/library/lib/add-linting';
+import { installCommonDependencies } from './lib/install-common-dependencies';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+export const nxVersion = require('../../../package.json').version;
 
 export default async function (
-  tree: Tree,
-  options: NxBrowserExtensionGeneratorSchema
+  host: Tree,
+  schema: Schema
 ) {
-  const normalizedOptions = normalizeOptions(tree, options);
-  addProjectConfiguration(tree, normalizedOptions.projectName, {
-    root: normalizedOptions.projectRoot,
-    projectType: 'library',
-    sourceRoot: `${normalizedOptions.projectRoot}/src`,
-    targets: {
-      build: {
-        executor: '@codeimpact/nx-browser-extension:build',
-      },
-    },
-    tags: normalizedOptions.parsedTags,
+  const options = normalizeOptions(host, schema);
+
+  console.log(options);
+
+  const tasks = [];
+
+  const initTask = await reactInitGenerator(host, {
+    ...options,
+    skipBabelConfig: true,
+    skipHelperLibs: true,
+    e2eTestRunner: 'none'
   });
-  addFiles(tree, normalizedOptions);
-  await formatFiles(tree);
+
+  tasks.push(initTask);
+
+  if (!options.rootProject) {
+    extractTsConfigBase(host);
+  }
+
+  createApplicationFiles(host, options);
+  addProject(host, options);
+
+
+  ensurePackage(host, '@nrwl/vite', nxVersion);
+  const { viteConfigurationGenerator } = await import('@nrwl/vite');
+  const viteTask = await viteConfigurationGenerator(host, {
+    uiFramework: 'react',
+    project: options.projectName,
+    newProject: true,
+    includeVitest: true,
+    inSourceTests: false
+  });
+  tasks.push(viteTask);
+
+  const lintTask = await addLinting(host, options);
+  tasks.push(lintTask);
+
+  const stylePreprocessorTask = installCommonDependencies(host, options);
+  tasks.push(stylePreprocessorTask);
+
+  await formatFiles(host);
+  return runTasksInSerial(...tasks);
 }

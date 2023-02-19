@@ -17,8 +17,10 @@
       "x-priority": "important"
     },
     "directory": {
+      "description": "The directory of the extension.",
       "type": "string",
-      "description": "A directory where the project is placed"
+      "alias": "dir",
+      "x-priority": "important"
     },
     "description": {
       "type": "string",
@@ -157,5 +159,6 @@
       "hidden": true
     }
   },
-  "required": ["name"]
+  "required": ["name"],
+  "examplesFile": "../../../docs/application-examples.md"
 }

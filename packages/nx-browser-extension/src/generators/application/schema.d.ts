@@ -10,7 +10,7 @@ export type SupportedStyles =
   | 'styled-jsx'
   | 'none';
 
-export interface NxBrowserExtensionGeneratorSchema {
+export interface Schema {
   name: string;
   directory?: string;
   description?: string;
