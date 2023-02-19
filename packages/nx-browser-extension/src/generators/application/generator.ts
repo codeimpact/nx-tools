@@ -1,15 +1,67 @@
-import { ensurePackage, formatFiles, Tree } from '@nrwl/devkit';
-import { Schema } from './schema';
+import {
+  addDependenciesToPackageJson,
+  ensurePackage,
+  formatFiles,
+  GeneratorCallback,
+  joinPathFragments,
+  Tree,
+  updateJson
+} from '@nrwl/devkit';
+import { Schema, NormalizedSchema } from './schema';
 import { normalizeOptions } from './lib/normalize-options';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
 import { createApplicationFiles } from './lib/create-application-files';
-import { reactInitGenerator } from '@nrwl/react';
+import { extendReactEslintJson, extraEslintDependencies, reactInitGenerator } from '@nrwl/react';
 import { extractTsConfigBase } from './lib/create-ts-config';
 import { addProject } from './lib/add-project';
-import { addLinting } from '@nrwl/react/src/generators/library/lib/add-linting';
 import { installCommonDependencies } from './lib/install-common-dependencies';
+import { Linter, lintProjectGenerator } from '@nrwl/linter';
+import { mapLintPattern } from '@nrwl/linter/src/generators/lint-project/lint-project';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 export const nxVersion = require('../../../package.json').version;
+
+async function addLinting(host: Tree, options: NormalizedSchema) {
+  const tasks: GeneratorCallback[] = [];
+  if (options.linter === Linter.EsLint) {
+    const lintTask = await lintProjectGenerator(host, {
+      linter: options.linter,
+      project: options.projectName,
+      tsConfigPaths: [
+        joinPathFragments(options.projectRoot, 'tsconfig.app.json'),
+      ],
+      unitTestRunner: options.unitTestRunner,
+      eslintFilePatterns: [
+        mapLintPattern(
+          options.projectRoot,
+          '{ts,tsx,js,jsx}',
+          options.rootProject
+        ),
+      ],
+      skipFormat: true,
+      rootProject: options.rootProject,
+      skipPackageJson: options.skipPackageJson,
+    });
+    tasks.push(lintTask);
+
+    updateJson(
+      host,
+      joinPathFragments(options.projectRoot, '.eslintrc.json'),
+      extendReactEslintJson
+    );
+
+    if (!options.skipPackageJson) {
+      const installTask = await addDependenciesToPackageJson(
+        host,
+        extraEslintDependencies.dependencies,
+        {
+          ...extraEslintDependencies.devDependencies
+        }
+      );
+      tasks.push(installTask);
+    }
+  }
+  return runTasksInSerial(...tasks);
+}
 
 export default async function (
   host: Tree,
@@ -44,12 +96,17 @@ export default async function (
     uiFramework: 'react',
     project: options.projectName,
     newProject: true,
-    includeVitest: true,
+    includeVitest: options.unitTestRunner === 'vitest',
     inSourceTests: false
   });
   tasks.push(viteTask);
 
-  const lintTask = await addLinting(host, options);
+  const lintOptions = {
+    ...options,
+    'js': false
+  }
+
+  const lintTask = await addLinting(host, lintOptions);
   tasks.push(lintTask);
 
   const stylePreprocessorTask = installCommonDependencies(host, options);
