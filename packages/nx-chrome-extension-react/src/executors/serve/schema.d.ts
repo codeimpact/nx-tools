@@ -1,1 +1,1 @@
-export interface ServeExecutorSchema {} // eslint-disable-line
+export interface Schema {} // eslint-disable-line
