@@ -11,7 +11,6 @@ export default async function* fileServerExecutor(
   options: Schema,
   context: ExecutorContext
 ) {
-  let running = false;
 
   console.log('lets do it');
   // const run = () => {
@@ -108,4 +107,5 @@ export default async function* fileServerExecutor(
   //     }
   //   });
   //});
+  yield { success: true };
 }
