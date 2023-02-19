@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "NxBrowserExtension",
+  "description": "Create a (firefox, chrome) browser extension",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the extension",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the chrome extension?",
+      "pattern": "^[a-zA-Z].*$",
+      "x-priority": "important"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the extension, used in the manifest",
+      "default": ""
+    },
+    "manifestVersion": {
+      "type": "string",
+      "description": "The chrome plugin manifest version (version v3 is required for chrome web store), for internal use v2 gives more control over the extension",
+      "enum": ["3", "2"],
+      "default": "3"
+    },
+    "firefoxBuild": {
+      "type": "boolean",
+      "description": "Generate a firefox extension build (will automatically convert the manifest to a firefox compatible one)",
+      "default": true
+    },
+    "popupPage": {
+      "type": "boolean",
+      "description": "Generate a extension popup",
+      "default": true
+    },
+    "backgroundScript": {
+      "type": "boolean",
+      "description": "Generate a background script / service worker",
+      "default": true
+    },
+    "optionsPage": {
+      "type": "boolean",
+      "description": "Generate an option page",
+      "default": true
+    },
+    "newTabPage": {
+      "type": "boolean",
+      "description": "Generate a page for a new tab",
+      "default": false
+    },
+    "contentScript": {
+      "type": "boolean",
+      "description": "Generate a content script",
+      "default": true
+    },
+    "devtoolsPage": {
+      "type": "boolean",
+      "description": "Generate a devtools page",
+      "default": true
+    },
+    "style": {
+      "description": "The file extension to be used for style files.",
+      "type": "string",
+      "default": "scss",
+      "alias": "s",
+      "x-prompt": {
+        "message": "Which stylesheet format would you like to use?",
+        "type": "list",
+        "items": [
+          {
+            "value": "css",
+            "label": "CSS"
+          },
+          {
+            "value": "scss",
+            "label": "SASS(.scss)       [ http://sass-lang.com                     ]"
+          },
+          {
+            "value": "styl",
+            "label": "Stylus(.styl)     [ http://stylus-lang.com                   ]"
+          },
+          {
+            "value": "less",
+            "label": "LESS              [ http://lesscss.org                       ]"
+          },
+          {
+            "value": "styled-components",
+            "label": "styled-components [ https://styled-components.com            ]"
+          },
+          {
+            "value": "@emotion/styled",
+            "label": "emotion           [ https://emotion.sh                       ]"
+          },
+          {
+            "value": "styled-jsx",
+            "label": "styled-jsx        [ https://www.npmjs.com/package/styled-jsx ]"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ]
+      }
+    },
+    "linter": {
+      "description": "The tool to use for running lint checks.",
+      "type": "string",
+      "enum": ["eslint", "none"],
+      "default": "eslint"
+    },
+    "skipFormat": {
+      "description": "Skip formatting files.",
+      "type": "boolean",
+      "default": false,
+      "x-priority": "internal"
+    },
+    "skipWorkspaceJson": {
+      "description": "Skip updating `workspace.json` with default options based on values provided to this app (e.g. babel, style).",
+      "type": "boolean",
+      "default": false,
+      "x-priority": "internal"
+    },
+    "unitTestRunner": {
+      "type": "string",
+      "enum": ["vitest", "none"],
+      "description": "Test runner to use for unit tests.",
+      "default": "vitest"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the project (used for linting)",
+      "alias": "t"
+    },
+    "strict": {
+      "type": "boolean",
+      "description": "Creates an application with strict mode and strict type checking.",
+      "default": true
+    },
+    "skipPackageJson": {
+      "description": "Do not add dependencies to `package.json`.",
+      "type": "boolean",
+      "default": false,
+      "x-priority": "internal"
+    },
+    "rootProject": {
+      "description": "Create a application at the root of the workspace",
+      "type": "boolean",
+      "default": false,
+      "hidden": true
+    }
+  },
+  "required": ["name"]
+}

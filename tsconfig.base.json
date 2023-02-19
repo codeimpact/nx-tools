@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@codeimpact/nx-browser-extension": [
+        "packages/nx-browser-extension/src/index.ts"
+      ],
       "@codeimpact/nx-chrome-extension-react": [
         "packages/nx-chrome-extension-react/src/index.ts"
       ]

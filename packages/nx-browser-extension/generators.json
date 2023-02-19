@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "Nx Browser Extension",
+  "version": "0.0.1",
+  "generators": {
+    "nx-browser-extension": {
+      "factory": "./src/generators/build/generator",
+      "schema": "./src/generators/build/schema.json",
+      "description": "nx-browser-extension generator"
+    },
+    "application": {
+      "factory": "./src/generators/build/generator",
+      "schema": "./src/generators/build/schema.json",
+      "aliases": ["app"],
+      "x-type": "application",
+      "description": "Create a chrome/firefox browser extension."
+    }
+  }
+}
