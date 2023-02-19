@@ -15,7 +15,7 @@ export function createApplicationFiles(host: Tree, options: NormalizedSchema) {
   console.log(templateVariables);
   generateFiles(
     host,
-    path.join(__dirname, '../files/app'),
+    path.join(__dirname, '../files'),
     options.projectRoot,
     templateVariables
   );
