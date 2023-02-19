@@ -1,4 +1,4 @@
-console.log('content script from the <%= manifestVersion %> is loaded');
+console.log('content script from the <%= projectName %> is loaded');
 
 /**
  * @description
