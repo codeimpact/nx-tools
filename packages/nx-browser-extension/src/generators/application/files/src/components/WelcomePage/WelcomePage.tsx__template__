@@ -10,7 +10,6 @@ const WelcomePage = () => {
         <p>
           Welcome to the <%= projectName %> extension!
         </p>
-        </a>
         <h6>The color of this paragraph is defined using SASS.</h6>
       </header>
     </div>

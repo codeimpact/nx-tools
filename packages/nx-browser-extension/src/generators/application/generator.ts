@@ -69,8 +69,6 @@ export default async function applicationGenerator(
 ) {
   const options = normalizeOptions(host, schema);
 
-  console.log(options);
-
   const tasks = [];
 
   const initTask = await reactInitGenerator(host, {
