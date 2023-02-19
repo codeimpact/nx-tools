@@ -11,17 +11,12 @@ export function createApplicationFiles(host: Tree, options: NormalizedSchema) {
     template: '',
   }
 
-  console.log('template variables');
-  console.log(templateVariables);
   generateFiles(
     host,
     path.join(__dirname, '../files'),
     options.projectRoot,
     templateVariables
   );
-
-  console.log('this options');
-  console.log(options);
 
   createTsConfig(
     host,

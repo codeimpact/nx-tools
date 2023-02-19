@@ -18,6 +18,7 @@ export function addProject(host, options: NormalizedSchema) {
   project.targets = {
     build: createBuildTarget(options),
     serve: createServeTarget(options),
+    live: createNewServe(options),
   };
 
   addProjectConfiguration(host, options.projectName, {
@@ -27,6 +28,30 @@ export function addProject(host, options: NormalizedSchema) {
 function createBuildTarget(options: NormalizedSchema): TargetConfiguration {
   return {
     executor: '@nrwl/vite:build',
+    outputs: ['{options.outputPath}'],
+    defaultConfiguration: 'production',
+    options: {
+      outputPath: joinPathFragments(
+        'dist',
+        options.projectRoot != '.'
+          ? options.projectRoot
+          : options.projectName
+      ),
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+  };
+}
+
+function createNewServe(options: NormalizedSchema): TargetConfiguration {
+  return {
+    executor: '@codeimpact/nx-chrome-extension-react:serve',
     outputs: ['{options.outputPath}'],
     defaultConfiguration: 'production',
     options: {
