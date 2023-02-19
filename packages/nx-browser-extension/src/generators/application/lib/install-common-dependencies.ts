@@ -23,5 +23,5 @@ export function installCommonDependencies(
 
   return devDependencies
     ? addDependenciesToPackageJson(host, {}, {...devDependencies, '@types/chrome': '0.0.216'})
-    : function noop() {};
+    : {};
 }

@@ -1,5 +1,6 @@
 import { Tree } from 'nx/src/generators/tree';
 import { writeJson } from 'nx/src/generators/utils/json';
+import { TsconfigModel } from '../models/tsconfig.model';
 
 export function createTsConfig(
   host: Tree,
@@ -28,7 +29,7 @@ export function createTsConfig(
         path: './tsconfig.app.json',
       },
     ],
-  } as any;
+  } as TsconfigModel;
 
   if (options.style === '@emotion/styled') {
     json.compilerOptions.jsxImportSource = '@emotion/react';
