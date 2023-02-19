@@ -15,11 +15,15 @@ export function normalizeOptions(
     ? options.tags.split(',').map((s) => s.trim())
     : [];
 
-  return {
+  const normalized = {
     ...options,
     projectName,
     projectRoot,
     projectDirectory,
     parsedTags,
-  };
+  } as NormalizedSchema;
+
+  normalized.description = options.description || `Description for the ${normalized.projectName} extension`;
+
+  return normalized;
 }

@@ -63,7 +63,7 @@ async function addLinting(host: Tree, options: NormalizedSchema) {
   return runTasksInSerial(...tasks);
 }
 
-export default async function (
+export default async function applicationGenerator(
   host: Tree,
   schema: Schema
 ) {
