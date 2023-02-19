@@ -8,7 +8,7 @@ const WelcomePage = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edits <code>src/components/WelcomePage/WelcomePage.tsx</code> and save to reload.
+          Welcome to the <%= manifestVersion %> plugin!
         </p>
         <a
           className="App-link"
@@ -16,7 +16,6 @@ const WelcomePage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React!
         </a>
         <h6>The color of this paragraph is defined using SASS.</h6>
       </header>

@@ -56,7 +56,7 @@
     "newTabPage": {
       "type": "boolean",
       "description": "Generate a page for a new tab",
-      "default": false
+      "default": true
     },
     "contentScript": {
       "type": "boolean",

@@ -11,6 +11,8 @@
     "@nrwl/js": "15.7.1",
     "@nrwl/linter": "15.7.1",
     "@nrwl/nx-plugin": "^15.7.1",
+    "@nrwl/react": "15.7.2",
+    "@nrwl/vite": "^15.7.2",
     "@nrwl/workspace": "15.7.1",
     "@swc-node/register": "^1.4.2",
     "@swc/cli": "~0.1.55",
@@ -32,8 +34,6 @@
   },
   "dependencies": {
     "@angular-devkit/architect": "^0.1501.6",
-    "@nrwl/react": "^15.7.2",
-    "@nrwl/vite": "^15.7.2",
     "@swc/helpers": "~0.4.11",
     "chokidar": "^3.5.3",
     "tslib": "^2.3.0"
