@@ -6,8 +6,10 @@
   <% if (optionsPage) { %> "options_page": "src/pages/options/index.html", <% } %>
   <% if (backgroundScript) { %> "background": { "service_worker": "src/pages/background/index.js" }, <% } %>
   "action": {
+    <% if (popupPage) { %>
     "default_popup": "src/pages/popup/index.html",
     "default_icon": "icon32.png"
+    <% } %>
   },
   <% if (newTabPage) { %>"chrome_url_overrides": { "newtab": "src/pages/newtab/index.html" },<% } %>
   "icons": {
@@ -16,6 +18,7 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
+  <% if (contentScript) { %>
   "content_scripts": [
     {
       "matches": [
@@ -31,6 +34,7 @@
       ]
     }
   ],
+  <% } %>
   <% if (devtoolsPage) { %>"devtools_page": "src/pages/devtools/index.html",<% } %>
   "web_accessible_resources": [
     {
