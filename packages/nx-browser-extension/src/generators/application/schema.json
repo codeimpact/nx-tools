@@ -30,8 +30,8 @@
     "manifestVersion": {
       "type": "string",
       "description": "The chrome plugin manifest version (version v3 is required for chrome web store), for internal use v2 gives more control over the extension",
-      "enum": ["3", "2"],
-      "default": "3"
+      "enum": ["v3", "v2"],
+      "default": "v3"
     },
     "firefoxBuild": {
       "type": "boolean",

@@ -23,6 +23,8 @@ export function normalizeOptions(
     parsedTags,
   } as NormalizedSchema;
 
+  normalized.manifestVersion = (options.manifestVersion === 'v3') ? '3' : '2';
+
   normalized.description = options.description || `Description for the ${normalized.projectName} extension`;
 
   return normalized;
