@@ -17,6 +17,7 @@ import { addProject } from './lib/add-project';
 import { installCommonDependencies } from './lib/install-common-dependencies';
 import { Linter, lintProjectGenerator } from '@nrwl/linter';
 import { mapLintPattern } from '@nrwl/linter/src/generators/lint-project/lint-project';
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 export const nxVersion = require('../../../package.json').version;
 
@@ -89,13 +90,9 @@ export default async function applicationGenerator(
 
 
   ensurePackage(host, '@nrwl/vite', nxVersion);
-  const { viteConfigurationGenerator } = await import('@nrwl/vite');
-  const viteTask = await viteConfigurationGenerator(host, {
-    uiFramework: 'react',
-    project: options.projectName,
-    newProject: true,
-    includeVitest: options.unitTestRunner === 'vitest',
-    inSourceTests: false
+  const { initGenerator } = await import('@nrwl/vite');
+  const viteTask = await initGenerator(host, {
+    uiFramework: 'react'
   });
   tasks.push(viteTask);
 
