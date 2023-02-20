@@ -1,6 +1,25 @@
 {
   "name": "@codeimpact/nx-browser-extension",
   "version": "0.0.1",
+  "keywords": [
+    "nx",
+    "chrome",
+    "browser",
+    "extension",
+    "webextension",
+    "vite",
+    "react",
+    "typescript"
+  ],
+  "homepage": "https://github.com/codeimpact/nx-tools",
+  "bugs": {
+    "url": "https://github.com/codeimpact/nx-tools/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeimpact/nx-tools"
+  },
+  "license": "MIT",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
