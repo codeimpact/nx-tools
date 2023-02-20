@@ -19,6 +19,8 @@ export function addProject(host, options: NormalizedSchema) {
     build: createBuildTarget(options),
     serve: createServeTarget(options),
     live: createNewServe(options),
+    test: createTestTarget(options),
+    lint: createLintTarget(options),
   };
 
   addProjectConfiguration(host, options.projectName, {
@@ -95,5 +97,25 @@ function createServeTarget(options: NormalizedSchema): TargetConfiguration {
         }
       }
     },
+  };
+}
+
+function createLintTarget(options: NormalizedSchema): TargetConfiguration {
+  return {
+    "executor": "@nrwl/linter:eslint",
+    "outputs": ["{options.outputFile}"],
+    "options": {
+      "lintFilePatterns": ["packages/test/**/*.{ts,tsx,js,jsx}"]
+    }
+  };
+}
+
+function createTestTarget(options: NormalizedSchema): TargetConfiguration {
+  return {
+    "executor": "@nrwl/vite:test",
+    "outputs": ["{projectRoot}/coverage"],
+    "options": {
+      "passWithNoTests": true
+    }
   };
 }
