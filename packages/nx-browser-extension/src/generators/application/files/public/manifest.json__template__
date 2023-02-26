@@ -3,11 +3,11 @@
   "name": "<%= projectName %>",
   "version": "0.0.1",
   "description": "<%= description %>",
+  "permissions": [],
   <% if (optionsPage) { %> "options_page": "src/pages/options/index.html", <% } %>
   <% if (manifestVersion === '3') { %>
   <% if (backgroundScript) { %> "background": { "service_worker": "src/pages/background/index.js" }, <% } %>
   <% } %>
-
   <% if (manifestVersion === '2') { %>
   <% if (backgroundScript) { %> "background": {
     "scripts": [
@@ -15,7 +15,6 @@
     ]
   },<% } %>
   <% } %>
-
   "action": {
     <% if (popupPage) { %>
     "default_popup": "src/pages/popup/index.html",
