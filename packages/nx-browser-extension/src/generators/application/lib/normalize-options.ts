@@ -24,6 +24,7 @@ export function normalizeOptions(
   } as NormalizedSchema;
 
   normalized.manifestVersion = (options.manifestVersion === 'v3') ? '3' : '2';
+  normalized.popupPage = normalized.popupPage ?? false;
 
   normalized.description = options.description || `Description for the ${normalized.projectName} extension`;
 
