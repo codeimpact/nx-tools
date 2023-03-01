@@ -3,13 +3,16 @@ import { NormalizedSchema } from '../schema';
 import * as path from 'path';
 import { createTsConfig } from './create-ts-config';
 
-export function createApplicationFiles(host: Tree, options: NormalizedSchema) {
+export async function createApplicationFiles(host: Tree, options: NormalizedSchema) {
   const templateVariables = {
     ...options,
     ...names(options.name),
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
   }
+
+  host.delete(`${options.projectRoot}/src`);
+  host.delete(`${options.projectRoot}/public`);
 
   generateFiles(
     host,

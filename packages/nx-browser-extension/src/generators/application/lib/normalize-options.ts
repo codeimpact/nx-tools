@@ -9,7 +9,8 @@ export function normalizeOptions(
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
     : name;
-  const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
+  const projectName = names(options.name).fileName;
+  const project = projectDirectory.replace('/', '-');
   const projectRoot = `${getWorkspaceLayout(tree).appsDir}/${projectDirectory}`;
   const parsedTags = options.tags
     ? options.tags.split(',').map((s) => s.trim())
@@ -18,6 +19,7 @@ export function normalizeOptions(
   const normalized = {
     ...options,
     projectName,
+    project,
     projectRoot,
     projectDirectory,
     parsedTags,

@@ -5,6 +5,16 @@
       "implementation": "./src/executors/serve/executor",
       "schema": "./src/executors/serve/schema.json",
       "description": "Serve the browser extension"
+    },
+    "build": {
+      "implementation": "./src/executors/build/executor",
+      "schema": "./src/executors/build/schema.json",
+      "description": "Build the browser extension for multiple browsers"
+    },
+    "package": {
+      "implementation": "./src/executors/package/executor",
+      "schema": "./src/executors/package/schema.json",
+      "description": "Package the webextension"
     }
   }
 }

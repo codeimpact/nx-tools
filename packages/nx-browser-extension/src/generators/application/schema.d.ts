@@ -38,5 +38,6 @@ export interface NormalizedSchema<T extends Schema = Schema> extends T {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
+  project: string;
   parsedTags: string[];
 }

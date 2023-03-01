@@ -1,25 +1,20 @@
 import {
   addDependenciesToPackageJson,
-  ensurePackage,
   formatFiles,
   GeneratorCallback,
-  joinPathFragments,
+  joinPathFragments, readProjectConfiguration,
   Tree,
-  updateJson
+  updateJson, updateProjectConfiguration
 } from '@nrwl/devkit';
 import { Schema, NormalizedSchema } from './schema';
 import { normalizeOptions } from './lib/normalize-options';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
 import { createApplicationFiles } from './lib/create-application-files';
-import { extendReactEslintJson, extraEslintDependencies, reactInitGenerator } from '@nrwl/react';
-import { extractTsConfigBase } from './lib/create-ts-config';
-import { addProject } from './lib/add-project';
+import {applicationGenerator, extendReactEslintJson, extraEslintDependencies } from '@nrwl/react';
 import { installCommonDependencies } from './lib/install-common-dependencies';
 import { Linter, lintProjectGenerator } from '@nrwl/linter';
 import { mapLintPattern } from '@nrwl/linter/src/generators/lint-project/lint-project';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-export const nxVersion = require('../../../package.json').version;
+import { resolve } from 'path';
 
 async function addLinting(host: Tree, options: NormalizedSchema) {
   const tasks: GeneratorCallback[] = [];
@@ -64,49 +59,49 @@ async function addLinting(host: Tree, options: NormalizedSchema) {
   return runTasksInSerial(...tasks);
 }
 
-export default async function applicationGenerator(
+export default async function createBrowserExtension(
   host: Tree,
   schema: Schema
 ) {
   const options = normalizeOptions(host, schema);
 
-  const tasks = [];
-
-  const initTask = await reactInitGenerator(host, {
-    ...options,
-    skipBabelConfig: true,
-    skipHelperLibs: true,
-    e2eTestRunner: 'none'
+  await applicationGenerator(host, {
+    name: options.name,
+    style: options.style,
+    skipFormat: false,
+    directory: options.directory,
+    tags: options.tags,
+    unitTestRunner: options.unitTestRunner,
+    inSourceTests: false,
+    e2eTestRunner: 'none',
+    linter: options.linter,
+    pascalCaseFiles: true,
+    classComponent: false,
+    routing: false,
+    globalCss: true,
+    strict: true,
+    bundler: 'vite',
+    minimal: true,
+    rootProject: options.rootProject
   });
 
-  tasks.push(initTask);
+  await createApplicationFiles(host, options);
 
-  if (!options.rootProject) {
-    extractTsConfigBase(host);
-  }
+  const config = readProjectConfiguration(host, options.project);
+  config.targets.serve.executor = '@codeimpact/nx-browser-extension:serve';
+  config.targets.build.executor = '@codeimpact/nx-browser-extension:build';
+  delete(config.targets.preview);
 
-  createApplicationFiles(host, options);
-  addProject(host, options);
-
-
-  ensurePackage(host, '@nrwl/vite', nxVersion);
-  const { initGenerator } = await import('@nrwl/vite');
-  const viteTask = await initGenerator(host, {
-    uiFramework: 'react'
-  });
-  tasks.push(viteTask);
-
-  const lintOptions = {
-    ...options,
-    'js': false
-  }
-
-  const lintTask = await addLinting(host, lintOptions);
-  tasks.push(lintTask);
-
-  const stylePreprocessorTask = installCommonDependencies(host, options);
-  tasks.push(stylePreprocessorTask);
+  const buildPath = config.targets.build.options.outputPath;
+  config.targets.package = {
+    executor: '@codeimpact/nx-browser-extension:package',
+    dependsOn: ['build'],
+    options: {
+      sourceDir: config.targets.build.options.outputPath,
+      artifactsDir: resolve(buildPath, '..'),
+    },
+  };
+  await updateProjectConfiguration(host, config.name, config);
 
   await formatFiles(host);
-  return runTasksInSerial(...tasks);
 }
