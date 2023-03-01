@@ -1,14 +1,31 @@
 import { BuildExecutorSchema } from './schema';
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext, normalizePath } from '@nrwl/devkit';
+import runCommands from 'nx/src/executors/run-commands/run-commands.impl';
 
 export default async function runExecutor(
   options: BuildExecutorSchema,
   context: ExecutorContext,
 ) {
-  console.log(options);
-  console.log('Executor ran for Build', options);
-  return {
-    success: true
-  };
+  const p = context.projectsConfigurations.projects[context.projectName];
+  const projectRootPath = normalizePath(`${context.root}/${p.root}`);
+  const outputPath = normalizePath(`${context.root}/${options.outputPath}`);
+
+  const args = [];
+  args.push('--outDir', outputPath);
+  if (options.watch) {
+    args.push('--watch');
+  }
+
+  const allArgs = args.join(' ');
+
+  return await runCommands(
+    {
+      cwd: projectRootPath,
+      commands: [`pwd`, `vite build ${allArgs}`],
+      parallel: false,
+      __unparsed__: [],
+    },
+    context
+  );
 }
 

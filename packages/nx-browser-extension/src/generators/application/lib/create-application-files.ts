@@ -13,6 +13,7 @@ export async function createApplicationFiles(host: Tree, options: NormalizedSche
 
   host.delete(`${options.projectRoot}/src`);
   host.delete(`${options.projectRoot}/public`);
+  host.delete(`${options.projectRoot}/index.html`);
 
   generateFiles(
     host,

@@ -12,6 +12,12 @@
     "fireFoxBuild": {
       "type": "boolean"
     },
+    "watch": {
+      "type": "boolean"
+    },
+    "outputPath": {
+      "type": "string"
+    },
     "artifactsDir": {
       "type": "string"
     }
