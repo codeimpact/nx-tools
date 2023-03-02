@@ -52,6 +52,7 @@ export default async function createBrowserExtension(
     executor: '@codeimpact/nx-browser-extension:package',
     dependsOn: ['build'],
     options: {
+      sourceDir: `${distPath}/build`,
       artifactsDir: `${distPath}/package`,
     },
   };

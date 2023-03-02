@@ -21,7 +21,7 @@ export default async function runExecutor(
   return await runCommands(
     {
       cwd: projectRootPath,
-      commands: [`pwd`, `vite build ${allArgs}`],
+      commands: [`vite build ${allArgs}`],
       parallel: false,
       __unparsed__: [],
     },
