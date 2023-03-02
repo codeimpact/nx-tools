@@ -40,15 +40,3 @@ export function createTsConfig(
 
   writeJson(host, `${projectRoot}/tsconfig.json`, json);
 }
-
-export function extractTsConfigBase(host: Tree) {
-  //shared.extractTsConfigBase(host);
-
-  if (host.exists('vite.config.ts')) {
-    const vite = host.read('vite.config.ts').toString();
-    host.write(
-      'vite.config.ts',
-      vite.replace(`projects: []`, `projects: ['tsconfig.base.json']`)
-    );
-  }
-}

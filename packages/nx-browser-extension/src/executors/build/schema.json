@@ -18,6 +18,9 @@
     "outputPath": {
       "type": "string"
     },
+    "backgroundDir": {
+      "type": "string"
+    },
     "artifactsDir": {
       "type": "string"
     }
