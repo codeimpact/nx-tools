@@ -35,12 +35,6 @@ export default async function createBrowserExtension(
   await createApplicationFiles(host, options);
 
   const config = readProjectConfiguration(host, options.project);
-  config.targets.serve.executor = '@codeimpact/nx-browser-extension:build';
-  config.targets.serve.options = {
-    "buildTarget": "test-test:build",
-    "watch": true,
-  }
-
   delete (config.targets.preview);
   const distPath = joinPathFragments(
     'dist',
@@ -48,6 +42,16 @@ export default async function createBrowserExtension(
       ? options.projectRoot
       : options.projectName
   );
+
+
+  config.targets.serve.executor = '@codeimpact/nx-browser-extension:build';
+  config.targets.serve.options = {
+    "outputPath": `${distPath}/build`,
+    "backgroundDir": (options.backgroundScript) ? `src/pages/background/index.ts` : null,
+    "manifestVersion": (options.manifestVersion == '2') ? 2 : 3,
+    "buildTarget": "test-test:build",
+    "watch": true,
+  }
 
   config.targets.build.executor = '@codeimpact/nx-browser-extension:build';
   config.targets.build.options.outputPath = `${distPath}/build`;

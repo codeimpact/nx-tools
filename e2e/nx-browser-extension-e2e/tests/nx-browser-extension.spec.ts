@@ -39,7 +39,7 @@ describe('nx-browser-extension e2e', () => {
     it('should create src in the specified directory', async () => {
       const project = uniq('nx-browser-extension');
       await runNxCommandAsync(
-        `generate @codeimpact/nx-browser-extension:nx-browser-extension ${project} --directory subdir`
+        `generate @codeimpact/nx-browser-extension:application ${project} --directory subdir`
       );
       expect(() =>
         checkFilesExist(`libs/subdir/${project}/src/index.ts`)
@@ -55,9 +55,11 @@ describe('nx-browser-extension e2e', () => {
         'dist/packages/nx-browser-extension'
       );
       await runNxCommandAsync(
-        `generate @codeimpact/nx-browser-extension:nx-browser-extension ${projectName} --tags e2etag,e2ePackage`
+        `generate @codeimpact/nx-browser-extension:application ${projectName} --tags e2etag,e2ePackage`
       );
       const project = readJson(`libs/${projectName}/project.json`);
+      console.log('here');
+      console.log(project);
       expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
     }, 120000);
   });

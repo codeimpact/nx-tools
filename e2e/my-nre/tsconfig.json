@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowJs": false,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "composite": true,
+    "module": "ESNext",
+    "types": ["vite/client"]
+  },
+  "files": [],
+  "include": ["vite.config.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ],
+  "extends": "../../tsconfig.base.json"
+}

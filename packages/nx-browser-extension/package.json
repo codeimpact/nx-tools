@@ -1,6 +1,6 @@
 {
   "name": "@codeimpact/nx-browser-extension",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "keywords": [
     "nx",
     "chrome",
@@ -24,6 +24,13 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nrwl/devkit": "^15.7.2"
+    "@nrwl/devkit": "^15.7.2",
+    "tsup": "^6.6.3",
+    "webextension-polyfill": "latest",
+    "web-ext": "latest",
+    "web-ext-types": "latest",
+    "@types/chrome": "0.0.216",
+    "@types/firefox-webext-browser": "latest",
+    "@types/webextension-polyfill": "latest"
   }
 }

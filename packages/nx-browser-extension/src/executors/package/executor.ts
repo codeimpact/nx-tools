@@ -16,7 +16,7 @@ export default async function runExecutor(
 
   return await runCommands(
     {
-      commands: [`npx web-ext build ${allArgs}`],
+      commands: [`web-ext build ${allArgs}`],
       parallel: false,
       __unparsed__: [],
     },

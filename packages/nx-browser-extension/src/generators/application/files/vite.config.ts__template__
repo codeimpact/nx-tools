@@ -37,12 +37,16 @@ export default defineConfig({
   build: {
     minify: isProduction,
     reportCompressedSize: isProduction,
+    lib: {
+      formats: ['iife'],
+      entry: resolve(pagesDir, 'background', 'index.ts'),
+      name: 'Cat Facts'
+    },
     rollupOptions: {
       input: {
         <% if (devtoolsPage) { %>devtools: resolve(pagesDir, "devtools", "index.html"),<% } %>
         <% if (devtoolsPage) { %>panel: resolve(pagesDir, "panel", "index.html"),<% } %>
         <% if (contentScript) { %>content: resolve(pagesDir, "content", "index.ts"),<% } %>
-        <% if (backgroundScript) { %>background: resolve(pagesDir, "background", "index.ts"),<% } %>
         <% if (contentScript) { %>contentStyle: resolve(pagesDir, "content", "style.scss"),<% } %>
         <% if (popupPage) { %>popup: resolve(pagesDir, "popup", "index.html"),<% } %>
         <% if (newTabPage) { %>newtab: resolve(pagesDir, "newtab", "index.html"),<% } %>
